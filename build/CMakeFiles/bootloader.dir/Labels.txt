@@ -1,13 +1,13 @@
 # Target labels
  bootloader
 # Source files and their labels
-C:/Users/Admin/Documents/ESP_IDF/hid/build/CMakeFiles/bootloader
-C:/Users/Admin/Documents/ESP_IDF/hid/build/CMakeFiles/bootloader.rule
-C:/Users/Admin/Documents/ESP_IDF/hid/build/CMakeFiles/bootloader-complete.rule
-C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
-C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
-C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
-C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
-C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
-C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
-C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
+D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/CMakeFiles/bootloader
+D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/CMakeFiles/bootloader.rule
+D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/CMakeFiles/bootloader-complete.rule
+D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule

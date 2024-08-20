@@ -1,4 +1,4 @@
-/* * Data converted from C:/Users/Admin/Documents/ESP_IDF/hid/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 .section .rodata.embedded

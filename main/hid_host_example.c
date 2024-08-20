@@ -54,6 +54,17 @@
 #include "OTA.h"
 //Added OTA libraries above this comment
 
+
+#include <errno.h>
+#include <dirent.h>
+#include "esp_console.h"
+#include "esp_check.h"
+#include "esp_partition.h"
+#include "driver/gpio.h"
+#include "tinyusb.h"
+#include "tusb_msc_storage.h"
+//Added MSC libraries above this commnet
+
 #include <stdbool.h>
 #include <unistd.h>
 #include "freertos/event_groups.h"
@@ -64,8 +75,14 @@
 #include "driver/gpio.h"
 #include "driver/timer.h"
 #include "driver/adc.h"
-#include "hid_host.h"
+#include "myhid_host.h"
 #include "hid_usage_keyboard.h"
+
+
+#define EPNUM_MSC       1
+#define TUSB_DESC_TOTAL_LEN (TUD_CONFIG_DESC_LEN + TUD_MSC_DESC_LEN)
+
+//MSC defines above
 
 
 #define EXAMPLE_ESP_WIFI_SSID               "Axio Electronics"
@@ -573,6 +590,54 @@ QueueHandle_t key_print_queue;
  * @brief Application Event from USB Host driver
  *
  */
+
+enum {
+    ITF_NUM_MSC = 0,
+    ITF_NUM_TOTAL
+};
+
+enum {
+    EDPT_CTRL_OUT = 0x00,
+    EDPT_CTRL_IN  = 0x80,
+
+    EDPT_MSC_OUT  = 0x01,
+    EDPT_MSC_IN   = 0x81,
+};
+
+static uint8_t const desc_configuration[] = {
+    // Config number, interface count, string index, total length, attribute, power in mA
+    TUD_CONFIG_DESCRIPTOR(1, ITF_NUM_TOTAL, 0, TUSB_DESC_TOTAL_LEN, TUSB_DESC_CONFIG_ATT_REMOTE_WAKEUP, 100),
+
+    // Interface number, string index, EP Out & EP In address, EP size
+    TUD_MSC_DESCRIPTOR(ITF_NUM_MSC, 0, EDPT_MSC_OUT, EDPT_MSC_IN, TUD_OPT_HIGH_SPEED ? 512 : 64),
+};
+
+static tusb_desc_device_t descriptor_config = {
+    .bLength = sizeof(descriptor_config),
+    .bDescriptorType = TUSB_DESC_DEVICE,
+    .bcdUSB = 0x0200,
+    .bDeviceClass = TUSB_CLASS_MISC,
+    .bDeviceSubClass = MISC_SUBCLASS_COMMON,
+    .bDeviceProtocol = MISC_PROTOCOL_IAD,
+    .bMaxPacketSize0 = CFG_TUD_ENDPOINT0_SIZE,
+    .idVendor = 0x303A, // This is Espressif VID. This needs to be changed according to Users / Customers
+    .idProduct = 0x4002,
+    .bcdDevice = 0x100,
+    .iManufacturer = 0x01,
+    .iProduct = 0x02,
+    .iSerialNumber = 0x03,
+    .bNumConfigurations = 0x01
+};
+
+static char const *string_desc_arr[] = {
+    (const char[]) { 0x09, 0x04 },  // 0: is supported language is English (0x0409)
+    "TinyUSB",                      // 1: Manufacturer
+    "TinyUSB Device",               // 2: Product
+    "123456",                       // 3: Serials
+    "Example MSC",                  // 4. MSC
+};
+//MSC code above
+
 typedef enum {
     HOST_NO_CLIENT = 0x1,
     HOST_ALL_FREE = 0x2,
@@ -742,6 +807,30 @@ const int WIFI_CONNECTED_BIT = BIT0;
 //static const char *TAG = "MAIN";
 
 static int s_retry_num = 0;
+
+
+
+
+static void storage_mount_changed_cb(tinyusb_msc_event_t *event)
+{
+    ESP_LOGI(TAG, "Storage mounted to application: %s", event->mount_changed_data.is_mounted ? "Yes" : "No");
+}
+
+static esp_err_t storage_init_spiflash(wl_handle_t *wl_handle)
+{
+    ESP_LOGI(TAG, "Initializing wear levelling");
+
+    const esp_partition_t *data_partition = esp_partition_find_first(ESP_PARTITION_TYPE_DATA, ESP_PARTITION_SUBTYPE_DATA_FAT, NULL);
+    if (data_partition == NULL) {
+        ESP_LOGE(TAG, "Failed to find FATFS partition. Check the partition table.");
+        return ESP_ERR_NOT_FOUND;
+    }
+
+    return wl_mount(data_partition, wl_handle);
+}
+
+//MSC code above
+
 
 static void event_handler(void *arg, esp_event_base_t event_base,
                           int32_t event_id, void *event_data)
@@ -1675,7 +1764,7 @@ static void display_task(void *pvParameters){
 
 static void power_off_task(void *pvParameters) {
   while (1) {
-    while (byok_batt_pct > 20 && !powerOffStatus)
+    while (byok_batt_pct >= 0 && !powerOffStatus)
       vTaskDelay(200/portTICK_PERIOD_MS);
     if (WMcharInput && charInput) {
       char path[50];
@@ -3628,6 +3717,33 @@ void app_main(void) {
     wifi_init_sta();
     ota_start();
     //OTA Code in app_main close
+
+
+static wl_handle_t wl_handle = WL_INVALID_HANDLE;
+    ESP_ERROR_CHECK(storage_init_spiflash(&wl_handle));
+
+    const tinyusb_msc_spiflash_config_t config_spi = {
+        .wl_handle = wl_handle,
+        .callback_mount_changed = storage_mount_changed_cb,  /* First way to register the callback. This is while initializing the storage. */
+        .mount_config.max_files = 2,
+    };
+   ESP_ERROR_CHECK(tinyusb_msc_storage_init_spiflash(&config_spi));
+    ESP_ERROR_CHECK(tinyusb_msc_register_callback(TINYUSB_MSC_EVENT_MOUNT_CHANGED, storage_mount_changed_cb)); /* Other way to register the callback i.e. registering using separate API. If the callback had been already registered, it will be overwritten. */
+
+    //mounted in the app by default
+    //_mount();
+
+    ESP_LOGI(TAG, "USB MSC initialization");
+    const tinyusb_config_t tusb_cfg = {
+        .device_descriptor = &descriptor_config,
+        .string_descriptor = string_desc_arr,
+        .string_descriptor_count = sizeof(string_desc_arr) / sizeof(string_desc_arr[0]),
+        .external_phy = false,
+        .configuration_descriptor = desc_configuration,
+    };
+    //ESP_ERROR_CHECK(tinyusb_driver_install(&tusb_cfg));
+    ESP_LOGI(TAG, "USB MSC initialization DONE");
+    //MSC code above
 
     xEventGroupWaitBits(usb_flags, APP_QUIT_EVENT, pdTRUE, pdFALSE, portMAX_DELAY);
 

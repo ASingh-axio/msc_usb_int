@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/Admin/esp/v5.2.1/esp-idf/components/esp_system/port
+# Install script for directory: D:/dprograms/esp/v5.2.1/esp-idf/components/esp_system/port
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/hid")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/byok_repo")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,11 +34,11 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Users/Admin/.espressif/tools/xtensa-esp-elf/esp-13.2.0_20230928/xtensa-esp-elf/bin/xtensa-esp32s3-elf-objdump.exe")
+  set(CMAKE_OBJDUMP "D:/dprograms/.espressif/tools/xtensa-esp-elf/esp-13.2.0_20230928/xtensa-esp-elf/bin/xtensa-esp32s3-elf-objdump.exe")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/Admin/Documents/ESP_IDF/hid/build/esp-idf/esp_system/port/soc/esp32s3/cmake_install.cmake")
+  include("D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/esp-idf/esp_system/port/soc/esp32s3/cmake_install.cmake")
 endif()
 

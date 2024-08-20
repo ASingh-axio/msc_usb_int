@@ -2,34 +2,34 @@
 	"sources" : 
 	[
 		{
-			"file" : "C:/Users/Admin/Documents/ESP_IDF/hid/build/CMakeFiles/bootloader"
+			"file" : "D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/CMakeFiles/bootloader"
 		},
 		{
-			"file" : "C:/Users/Admin/Documents/ESP_IDF/hid/build/CMakeFiles/bootloader.rule"
+			"file" : "D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/CMakeFiles/bootloader.rule"
 		},
 		{
-			"file" : "C:/Users/Admin/Documents/ESP_IDF/hid/build/CMakeFiles/bootloader-complete.rule"
+			"file" : "D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/CMakeFiles/bootloader-complete.rule"
 		},
 		{
-			"file" : "C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+			"file" : "D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
 		},
 		{
-			"file" : "C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+			"file" : "D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
 		},
 		{
-			"file" : "C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+			"file" : "D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
 		},
 		{
-			"file" : "C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+			"file" : "D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
 		},
 		{
-			"file" : "C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+			"file" : "D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
 		},
 		{
-			"file" : "C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+			"file" : "D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
 		},
 		{
-			"file" : "C:/Users/Admin/Documents/ESP_IDF/hid/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+			"file" : "D:/axio/projects/byok/tusb_integration_trial2/byok_repo/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
 		}
 	],
 	"target" : 
